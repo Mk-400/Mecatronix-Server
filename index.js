@@ -18,6 +18,9 @@ import { db_connection } from "./config/db.config.js";
 import logger from "./utils/logger.js";
 import Routes from "./routers/router_index.js";
 
+const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || `localhost`;
+
 // ---------------------------
 //  🌱 Load environment variables
 // ---------------------------
@@ -32,7 +35,7 @@ const __dirname = path.dirname(__filename);
 // ---------------------------
 //  ✅ Environment Sanity Check
 // ---------------------------
-if (!process.env.PORT || !process.env.MONGO_URI) {
+if (!process.env.PORT) {
   console.error("❌ Missing required environment variables.");
   process.exit(1);
 }
@@ -73,10 +76,15 @@ app.use(
 // app.use(xssClean());
 
 // ✅ CORS — restrict origins in production
+
+const LOCAL_URL = process.env.LOCAL_URL || `http://${HOST}:5173`;
+const CLIENT_URL = process.env.CLIENT_URL || "https://mecatronix.com";
+const ADMIN_URL = process.env.ADMIN_URL || "https://admin.mecatronix.com";
+
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://Mecatronix.com",
-  "https://admin.Mecatronix.com",
+  LOCAL_URL,
+  CLIENT_URL,
+  ADMIN_URL,
 ];
 
 app.use(
@@ -149,13 +157,11 @@ app.use((err, req, res, next) => {
 // ---------------------------
 //  🔥 Start Server
 // ---------------------------
-const PORT = process.env.PORT || 5000;
-
 
 db_connection()
   .then(() => {
     const server = app.listen(PORT, () => {
-      logger.info(`✅ Server started at: http://localhost:${PORT}`);
+      logger.info(`✅ Server started at: http://${HOST}:${PORT}`);
       logger.info(`🌍 Environment: ${process.env.NODE_ENV}`);
     });
 

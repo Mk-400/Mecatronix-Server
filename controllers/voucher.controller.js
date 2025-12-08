@@ -47,8 +47,8 @@ export const addVoucher = async (req, res) => {
                             heading: heading?.[0] || "",
                             message: msg?.[0] || "",
                             images: img || [], // Send all images for the grid
-                            websiteUrl: process.env.FRONTEND_URL || "https://mecatronix.com",
-                            unsubscribeUrl: `${process.env.FRONTEND_URL}/unsubscribe?email=${encodeURIComponent(sub.email)}`
+                            websiteUrl: process.env.CLIENT_URL || "https://mecatronix.com",
+                            unsubscribeUrl: `${process.env.CLIENT_URL}/unsubscribe?email=${encodeURIComponent(sub.email)}`
                         },
                     })
                 )
