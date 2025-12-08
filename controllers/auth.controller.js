@@ -21,7 +21,8 @@ import {
 } from "../helpers/message.helper.js";
 import { sendMail } from "../helpers/mail.helper.js";
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "https://Mecatronix.com";
+const CLIENT_URL = process.env.CLIENT_URL || "https://Mecatronix.com";
+const cookieMaxAge = Number(process.env.COOKIE_EXPIRE) || 60 * 60 * 1000;
 
 /* ======================================================
    🔹 LOGIN
@@ -47,7 +48,7 @@ export const login = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      maxAge: 60 * 60 * 1000,
+      maxAge: cookieMaxAge,
       path: "/",
     });
 
@@ -137,7 +138,7 @@ export const forgotPassword = async (req, res) => {
     });
 
     // 5️⃣ Build link
-    const resetLink = `${FRONTEND_URL}/reset-password/${rawToken}`;
+    const resetLink = `${CLIENT_URL}/reset-password/${rawToken}`;
 
     // 6️⃣ Send email
     await sendMail({

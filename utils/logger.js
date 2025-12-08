@@ -22,7 +22,7 @@ const logFormat = winston.format.combine(
 
 // Create logger
 const logger = winston.createLogger({
-  level: process.env.NODE_ENV === "development" ? "debug" : "info",
+  level: process.env.NODE_ENV === "development" ? "debug" : process.env.LOG_LEVEL || "info",   
   format: logFormat,
   transports: [
     new winston.transports.File({ filename: path.join(logDir, "error.log"), level: "error" }),

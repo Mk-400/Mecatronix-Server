@@ -47,7 +47,7 @@ export const addAdmin = async (req, res) => {
         phone,
         password, // 👈 plain password only for the first-time login email
         role: role || "admin",
-        loginUrl: `${process.env.FRONTEND_URL || "https://Admin.mecatronix.com"}/login`,
+        loginUrl: `${process.env.CLIENT_URL || "https://Admin.mecatronix.com"}/login`,
       },
     });
 
@@ -155,7 +155,7 @@ export const updateAdmin = async (req, res) => {
             name: updatedAdmin.name,
             email: updatedAdmin.email,
             password: newPasswordPlain,
-            loginUrl: `${process.env.FRONTEND_URL || "https://Admin.mecatronix.com"}/login`,
+            loginUrl: `${process.env.CLIENT_URL || "https://Admin.mecatronix.com"}/login`,
           },
         });
       } catch (mailError) {
@@ -198,7 +198,7 @@ export const deleteAdmin = async (req, res) => {
         email: admin.email,
         role: admin.role,
         supportEmail: process.env.MAIL_USER,
-        contactUrl: `${process.env.FRONTEND_URL}/contact`,
+        contactUrl: `${process.env.CLIENT_URL}/contact`,
       },
     });
 
